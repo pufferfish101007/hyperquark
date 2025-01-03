@@ -160,7 +160,7 @@ impl Proc {
         };
         Ok(Proc {
             first_step: Box::new(first_step),
-            context
+            context,
         })
     }
 }

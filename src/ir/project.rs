@@ -1,9 +1,7 @@
 use crate::prelude::*;
 use crate::sb3::Sb3Project;
 
-pub struct IrProject {
-    
-}
+pub struct IrProject {}
 
 impl TryFrom<Sb3Project> for IrProject {
     type Error = HQError;
