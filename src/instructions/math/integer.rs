@@ -1,7 +1,7 @@
 use crate::ir::Type as IrType;
 use crate::prelude::*;
 use crate::wasm::StepFunc;
-use wasm_encoder::{Instruction, ValType};
+use wasm_encoder::Instruction;
 
 #[derive(Clone, Copy, Debug)]
 pub struct Fields(pub i64);

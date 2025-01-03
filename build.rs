@@ -1,7 +1,7 @@
 use convert_case::{Case, Casing};
 use std::env;
 use std::fs;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 // I hate to admit this, but a fair bit of this file was written by chatgpt to speed things up
 // and to allow me to continue to procrastinate about learning how to do i/o stuff in rust.
@@ -116,7 +116,7 @@ fn main() {
                 }
             }).collect::<Vec<_>>().join("\n"),
             paths.iter().filter(|(_, _, fields, _)| *fields)
-            .map(|(path, id, _, fields_name)|
+            .map(|(path, _, _, fields_name)|
                 format!("pub use {}::Fields as {};", path, fields_name)
             ).collect::<Vec<_>>().join("\n"),
     ))

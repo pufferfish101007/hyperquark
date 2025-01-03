@@ -1,5 +1,3 @@
-use crate::prelude::*;
-
 mod file_opcode {
     //! instruction module paths look something like
     //! hyperquark::instructions::category::block
@@ -53,6 +51,7 @@ macro_rules! instructions_test {
         use $crate::ir::Type as IrType;
         use wasm_encoder::ValType;
 
+        #[allow(unused)]
         macro_rules! ident_as_irtype {
             ( $_:ident ) => { IrType };
         }
@@ -129,7 +128,7 @@ macro_rules! instructions_test {
                     step_func.add_instructions(wasm);
                     let func = step_func.finish();
 
-                    let wasm_proj = $crate::wasm::WasmProject::new(Default::default(), crate::wasm::ExternalEnvironment::WebBrowser);
+                    let wasm_proj = $crate::wasm::WasmProject::new(Default::default(), $crate::wasm::ExternalEnvironment::WebBrowser);
 
                     let mut module = Module::new();
 

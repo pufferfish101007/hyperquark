@@ -1,4 +1,3 @@
-use crate::instructions::{file_block_category, file_block_name};
 use crate::ir::Type as IrType;
 use crate::prelude::*;
 use crate::wasm::StepFunc;

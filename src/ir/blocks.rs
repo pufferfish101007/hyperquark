@@ -4,18 +4,22 @@ use crate::sb3::{Block, BlockArray, BlockInfo, BlockMap, BlockOpcode};
 use fields::*;
 
 impl BlockOpcode {
-    fn from_block(block: &Block, blocks: &BlockMap) -> HQResult<IrOpcode> {
+    pub fn from_block(block: &Block, blocks: &BlockMap) -> HQResult<IrOpcode> {
         match block {
             Block::Normal { block_info, .. } => BlockOpcode::from_normal_block(block_info, blocks),
-            Block::Special(block_array) => BlockOpcode::from_special_block(block_array, blocks),
+            Block::Special(block_array) => BlockOpcode::from_special_block(block_array),
         }
     }
 
-    fn from_normal_block(block_info: &BlockInfo, blocks: &BlockMap) -> HQResult<IrOpcode> {
-        hq_todo!()
+    fn from_normal_block(block_info: &BlockInfo, _blocks: &BlockMap) -> HQResult<IrOpcode> {
+        Ok(match &block_info.opcode {
+            BlockOpcode::operator_add => IrOpcode::operator_add,
+            BlockOpcode::looks_say => IrOpcode::looks_say,
+            other => hq_todo!("unimplemented block: {:?}", other),
+        })
     }
 
-    fn from_special_block(block_array: &BlockArray, blocks: &BlockMap) -> HQResult<IrOpcode> {
+    fn from_special_block(block_array: &BlockArray) -> HQResult<IrOpcode> {
         Ok(match block_array {
             BlockArray::NumberOrAngle(ty, value) => match ty {
                 4 | 8 => IrOpcode::math_number(MathNumberFields(*value)),
@@ -43,8 +47,8 @@ impl BlockOpcode {
                 },*/
                 _ => hq_bad_proj!("bad project json (block array of type ({}, string))", ty),
             },
-            BlockArray::Broadcast(ty, _name, id)
-            | BlockArray::VariableOrList(ty, _name, id, _, _) => match ty {
+            BlockArray::Broadcast(ty, _name, _id)
+            | BlockArray::VariableOrList(ty, _name, _id, _, _) => match ty {
                 /*12 => IrOpcode::data_variable {
                     VARIABLE: id.to_string(),
                     assume_type: None,
